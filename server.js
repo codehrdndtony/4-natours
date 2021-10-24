@@ -27,7 +27,7 @@ const server = app.listen(port, () => {
 
 process.on('unhandledRejection', err => {
   console.log('UNHANDLED REJECTION -- Shutting down...');
-  console.log(err.name, err.message.match(/MongoError:.*/gm)[0]);
+  // console.log(err.name, err.message.match(/MongoError:.*/gm)[0]);
   server.close(() => {
     process.exit(1);
   })
