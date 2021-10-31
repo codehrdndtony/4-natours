@@ -30,9 +30,13 @@ if(logOutBtn) logOutBtn.addEventListener('click', logout);
 if(userDataForm)
   userDataForm.addEventListener('submit', e => {
     e.preventDefault();
-    const email = document.getElementById('email').value;
-    const name = document.getElementById('name').value;
-    updateSettings({name, email}, 'data');
+    const form = new FormData(); // programmatically created 'enctype=multipart-data'
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    console.log(form);
+
+    updateSettings(form, 'data'); // form recognized with an AXIOS as an object and works like before
 });
 
 if(userPasswordForm)

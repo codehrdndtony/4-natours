@@ -70,9 +70,7 @@ app.use(hpp({
 // TEST middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(req.cookies);
   //console.log(req.headers); - used to debug authorization header
-
   next();
 });
 
