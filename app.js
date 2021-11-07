@@ -15,6 +15,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 app.set('view engine', 'pug');
@@ -27,7 +28,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Security HTTP headers
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 // Development logging
 console.log(`CURRENT ENV >> ${process.env.NODE_ENV} <<`);
@@ -67,12 +72,18 @@ app.use(hpp({
   })
 );
 
+// app.use(function (req, res, next) {
+//   res.setHeader(
+//     "Content-Security-Policy",
+//     "font-src 'self'  https://fonts.gstatic.com ; script-src 'self' https://cdnjs.cloudflare.com https://js.stripe.com/v3/ https://api.mapbox.com; style-src 'self' https://fonts.googleapis.com/css https://api.mapbox.com blob: 'unsafe-inline'; frame-src 'self' https://js.stripe.com; worker-src 'self' blob:;"
+//   );
+//   next();
+// });
+
 // TEST middleware
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
-  console.log(req.cookies);
   //console.log(req.headers); - used to debug authorization header
-
   next();
 });
 
@@ -82,6 +93,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
   // const err = new Error(`Can't find ${req.originalUrl} on this server`);
