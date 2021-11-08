@@ -72,6 +72,8 @@ app.use(hpp({
   })
 );
 
+app.use(compression());
+
 // app.use(function (req, res, next) {
 //   res.setHeader(
 //     "Content-Security-Policy",
