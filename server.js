@@ -6,7 +6,8 @@ dotenv.config({ path: './config.env' });
 const app = require('./app');
 //console.log(process.env);
 
-const DB = process.env.DB_LINK.replace('<PASSWORD>', process.env.DB_PASSWORD);
+//const DB = process.env.DB_LINK.replace('<PASSWORD>', process.env.DB_PASSWORD);
+const DB = process.env.DB_LINK;
 
 mongoose
   .connect(DB, {
@@ -17,8 +18,7 @@ mongoose
     debug: true
 }).then(con => {
   console.log('DB connection successful!');
-});
-// .catch(err => console.log('ERROR')) = handles unhandled promise rejection. Done globally
+}).catch(err => console.log('DB ERROR')); // = handles unhandled promise rejection. Done globally
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
@@ -39,6 +39,13 @@ process.on('uncaughtException', err => {
   server.close(() => {
     process.exit(1);
   })
+});
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM RECEIVED. Shutting down gracefully');
+  server.close(() => {
+    console.log(' >!!< Process terminated!');
+  });
 });
 
 
