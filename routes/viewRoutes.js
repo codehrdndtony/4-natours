@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Created as workaround for Stripe link compositing. Will be replaced with Stripe Webhook afterwards
 router.get('/',
-  bookingController.createBookingCheckout,
+  // bookingController.createBookingCheckout,
   authController.isLoggedIn,
   viewsController.getOverview
 );
