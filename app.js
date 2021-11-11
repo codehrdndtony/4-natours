@@ -8,7 +8,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
-const cors = require('cors')
+const cors = require('cors');
 const app = express();
 
 const AppError = require('./utils/appError');
@@ -33,7 +33,7 @@ app.use(cors());
 //   origin: 'https://www.natours.com'
 // }));
 
-app.options('*', cors());
+//app.options('*', cors());
 // app.options('/api/v1/tours/:id', cors())
 
 // Serving static files app.use(express.static(`${__dirname}/public`));
